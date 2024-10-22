@@ -1,2 +1,2 @@
 #!/bin/bash
-touch $CFILE<c
+touch $CFILE.c<c
