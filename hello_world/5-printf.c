@@ -6,7 +6,7 @@
  * Description: This program prints "with proper grammar, but the outcome
  * is a piece of art," using the printf function, followed by a new line.
  *
- * Return : Always 0 (Success)
+ * Return: Always 0 (Success)
  */
 int main(void)
 {
