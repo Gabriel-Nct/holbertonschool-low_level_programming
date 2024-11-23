@@ -1,13 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 /**
- * print_name - Applique une fonction donnée sur une chaîne de caractères
+ * print_name - Applique une fonction sur un string.
  * @name: Chaîne de caractères représentant un nom
- * @f: Pointeur vers une fonction qui prend un char * en paramètre
- *
- * Description: Cette fonction applique l'opération définie par le
- * pointeur de fonction `f` à la chaîne `name`.
- * Si `name` ou `f` est NULL, elle ne fait rien.
+ * @f: Pointeur vers une fonction.
+ * 
+ * Description: xxx
  */
 void print_name(char *name, void (*f)(char *))
 {
