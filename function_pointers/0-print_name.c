@@ -4,14 +4,12 @@
  * @name: Chaîne de caractères représentant un nom
  * @f: Pointeur vers une fonction.
  * 
- * Description: xxx
+ * Description: Fonction qui utilise un pointeur
+ * pour appeler d'autres fonctions.
  */
 void print_name(char *name, void (*f)(char *))
 {
 if (name == NULL || f == NULL)
 return;
-else
-{
 (*f)(name);
-}
 }
