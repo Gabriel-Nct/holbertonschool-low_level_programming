@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "functions_pointers.h"
 /**
  * print_name - Applique une fonction sur un string.
  * @name: Chaîne de caractères représentant un nom
