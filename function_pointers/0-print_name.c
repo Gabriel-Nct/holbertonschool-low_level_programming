@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include "function_pointers.h"
 /**
  * print_name - Applique une fonction sur un string.
