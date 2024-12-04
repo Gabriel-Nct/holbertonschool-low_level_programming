@@ -12,19 +12,22 @@
 list_t *add_node(list_t **head, const char *str)
 {
     list_t *debutliste;
+     size_t longeur = 0;
 
     debutliste = malloc(sizeof(list_t));
 if (debutliste == NULL)
     return (NULL);
-debutliste->str = malloc(strlen(str) + 1);
+ debutliste->str = strdup(str);
 if (debutliste->str == NULL)
 {
     free(debutliste);
     return (NULL);
 }
-strcpy(debutliste->str, str); 
 debutliste->next = *head;
-debutliste->len = strlen(str);
+while (str[longeur] != '\0')
+longeur++;
+debutliste->len = longeur;
+debutliste->next = *head;
 *head = debutliste;
 return (debutliste);
 }
