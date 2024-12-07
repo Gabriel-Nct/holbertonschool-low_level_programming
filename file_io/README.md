@@ -1,79 +1,133 @@
-File I/O Operations
-Overview
-This project demonstrates basic file input/output operations in C, focusing on system calls like open, close, read, and write. The project involves reading from and writing to files, creating files, appending text to existing files, and copying file contents.
+README - File I/O in C
+Introduction
 
-Requirements
-Editors: vi, vim, emacs
+File Input/Output (I/O) in C is essential for reading and writing data to files. C provides a set of standard functions to handle files through the C Standard Library (stdio.h). These functions allow programs to interact with files for various purposes, such as reading text files, writing to files, or appending data.
+Opening a File
 
-Compilation: All files will be compiled on Ubuntu 20.04 LTS using gcc with the options -Wall -Werror -Wextra -pedantic -std=gnu89.
+To perform any I/O operations on a file, it must first be opened using the fopen() function. The fopen() function requires two parameters:
 
-Coding Style: Code should adhere to the Betty style.
+    File name: The path to the file to be opened.
+    Mode: The mode in which the file should be opened (read, write, append, etc.).
 
-Restrictions:
+Here is an example of opening a file in read mode:
+```c
+FILE *file = fopen("example.txt", "r");
+if (file == NULL) {
+    printf("Could not open file.\n");
+    return 1;
+}
+```
+Common modes are:
 
-No global variables.
+    "r": Open for reading (the file must exist).
+    "w": Open for writing (creates the file if it doesn't exist, overwrites if it does).
+    "a": Open for appending (adds content at the end of the file).
+    "rb", "wb", "ab": Open in binary mode (for non-text files).
 
-Maximum of 5 functions per file.
+Reading from a File
 
-Allowed C standard library functions: malloc, free, exit.
+Once a file is opened, you can read its contents using several functions, including fgetc(), fgets(), and fread().
+Example 1: Using fgetc() to read one character at a time
+```c
+char ch;
+FILE *file = fopen("example.txt", "r");
+if (file == NULL) {
+    printf("Could not open file.\n");
+    return 1;
+}
 
-Allowed syscalls: read, write, open, close.
+while ((ch = fgetc(file)) != EOF) {
+    putchar(ch);
+}
+fclose(file);
+```
+Example 2: Using fgets() to read a line
+```c
+char line[100];
+FILE *file = fopen("example.txt", "r");
+if (file == NULL) {
+    printf("Could not open file.\n");
+    return 1;
+}
 
-You are allowed to use _putchar.
+while (fgets(line, sizeof(line), file)) {
+    printf("%s", line);
+}
 
-Project Structure
-Header File: main.h
+fclose(file);
+```
 
-Function prototypes and necessary includes.
+Writing to a File
 
-Source Files:
+You can write data to a file using functions like fputc(), fputs(), and fwrite().
+Example 1: Using fputc() to write a character
+```c
+FILE *file = fopen("output.txt", "w");
+if (file == NULL) {
+    printf("Could not open file.\n");
+    return 1;
+}
 
-0-read_textfile.c: Reads a text file and prints it to the POSIX standard output.
+fputc('A', file);
 
-1-create_file.c: Creates a file with specified permissions and writes to it.
+fclose(file);
+```
+Example 2: Using fputs() to write a string
+```c
+FILE *file = fopen("output.txt", "w");
+if (file == NULL) {
+    printf("Could not open file.\n");
+    return 1;
+}
 
-2-append_text_to_file.c: Appends text at the end of a file.
+fputs("Hello, World!", file);
 
-3-cp.c: Copies content from one file to another.
+fclose(file);
+```
+Example 3: Using fwrite() to write a block of data
+```c
+char data[] = "This is a block of data.";
+FILE *file = fopen("output.txt", "w");
+if (file == NULL) {
+    printf("Could not open file.\n");
+    return 1;
+}
 
-Tasks
-Task 0: Tread lightly, she is near
-Function: read_textfile
+fwrite(data, sizeof(char), sizeof(data) - 1, file);
 
-Prototype: ssize_t read_textfile(const char *filename, size_t letters);
+fclose(file);
+```
+Closing a File
 
-Reads and prints a specified number of letters from a file.
+After finishing all I/O operations, it is important to close the file using fclose(). This ensures that all changes are saved and that system resources are released.
+```c
+FILE *file = fopen("example.txt", "r");
+if (file == NULL) {
+    printf("Could not open file.\n");
+    return 1;
+}
 
-Returns: The actual number of letters read and printed, or 0 if an error occurs.
 
-Task 1: Under the snow
-Function: create_file
+fclose(file); 
+```
+Error Handling
 
-Prototype: int create_file(const char *filename, char *text_content);
+When working with files, error handling is crucial. Always check if a file was opened successfully. You can check for errors by examining the returned FILE* from fopen(). Additionally, functions like ferror() and feof() can be used to detect I/O errors or the end-of-file condition.
+Example: Error Checking
+```c
+FILE *file = fopen("example.txt", "r");
+if (file == NULL) {
+    perror("Error opening file");
+    return 1;
+}
 
-Creates a file with specified permissions and writes a given string to it.
 
-Returns: 1 on success, -1 on failure.
+if (ferror(file)) {
+    printf("Error reading from file.\n");
+}
 
-Task 2: Speak gently, she can hear
-Function: append_text_to_file
+fclose(file);
+```
+Conclusion
 
-Prototype: int append_text_to_file(const char *filename, char *text_content);
-
-Appends a given string to the end of an existing file.
-
-Returns: 1 on success, -1 on failure.
-
-Task 3: cp
-Program: cp
-
-Copies content from one file to another.
-
-Handles errors and edge cases with appropriate error messages and exit codes.
-
-Usage
-Compile the programs using gcc with the provided options. Example:
-
-sh
-gcc -Wall -Werror -Wextra -pedantic -std=gnu89 0-read_textfile.c -o read_textfile
-Run the programs and provide necessary arguments as required by each task.
+File I/O in C is a powerful feature that allows you to interact with external data stored in files. By using the right functions, you can open files, read and write data, and handle errors effectively. Always ensure you close files after use to free system resources and avoid data corruption.
