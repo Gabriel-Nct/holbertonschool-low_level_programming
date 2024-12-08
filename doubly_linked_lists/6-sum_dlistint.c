@@ -12,5 +12,5 @@ while (head != NULL)
 somme += head->n;
 head = head->next;
 }
-return somme;
+return (somme);
 }
