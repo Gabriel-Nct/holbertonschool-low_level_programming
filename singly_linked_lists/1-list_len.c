@@ -18,5 +18,5 @@ size_t compteur = 0;
 		++compteur;
 		h = h->next;
 	}
-	return compteur;
+	return (compteur);
 }
