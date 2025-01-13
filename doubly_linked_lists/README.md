@@ -1,4 +1,4 @@
-### * C - Doubly linked lists**
+### ** C - Doubly linked lists**
 
 A **doubly linked list** is similar to a singly linked list but with an additional pointer in each node that points to the previous node. This allows traversal of the list in both directions: forward and backward.
 
