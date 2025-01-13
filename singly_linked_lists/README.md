@@ -1,31 +1,28 @@
-# Learning Objectives
+### **C - Singly linked lists**
 
-At the end of this project, you are expected to be able to explain to anyone, without the help of Google:
+A **singly linked list** is a data structure where each element (node) contains:
 
-## General
-- When and why to use linked lists vs arrays
-- How to build and use linked lists
+-   A piece of data (in this case, a string).
+-   A pointer to the next node in the list.
 
-## Requirements
-### General
-- Allowed editors: `vi`, `vim`, `emacs`
-- All your files will be compiled on Ubuntu 20.04 LTS using `gcc`, with the options `-Wall -Werror -Wextra -pedantic -std=gnu89`
-- All your files should end with a new line
-- A `README.md` file, at the root of the folder of the project is mandatory
-- Your code should use the Betty style. It will be checked using `betty-style.pl` and `betty-doc.pl`
-- You are not allowed to use global variables
-- No more than 5 functions per file
-- The only C standard library functions allowed are `malloc`, `free`, and `exit`. Any use of functions like `printf`, `puts`, `calloc`, `realloc` etc. is forbidden
-- You are allowed to use `_putchar`
-- You don’t have to push `_putchar.c`, we will use our file. If you do it won’t be taken into account
-- In the following examples, the `main.c` files are shown as examples. You can use them to test your functions, but you don’t have to push them to your repo (if you do we won’t take them into account). We will use our own `main.c` files at compilation. Our `main.c` files might be different from the ones shown in the examples
-- The prototypes of all your functions and the prototype of the function `_putchar` should be included in your header file called `lists.h`
-- Don’t forget to push your header file
-- All your header files should be include guarded
+The main goal of this project is to implement and manipulate such linked lists and understand when and why they are useful compared to arrays.
 
-## More Info
-Please use this data structure for this project:
+----------
 
+### **Learning Objectives**
+
+By the end of this project, you should be able to:
+
+-   **Understand when to use linked lists versus arrays**: Linked lists are often more flexible than arrays because their size can dynamically grow and shrink, unlike arrays with fixed sizes. They allow efficient insertions and deletions, especially when modifying the middle of the list, but access times are slower compared to arrays.
+    
+-   **How to build and use linked lists**: You will learn how to create and manipulate linked lists, including adding new nodes, traversing the list, and removing nodes.
+    
+
+----------
+
+### **Data Structure**
+
+For this project, you will be using the following structure to represent the nodes in the linked list:
 ```c
 /**
  * struct list_s - singly linked list
@@ -41,48 +38,66 @@ typedef struct list_s
     unsigned int len;
     struct list_s *next;
 } list_t;
-Tasks
-0. Print list
-Write a function that prints all the elements of a list_t list.
 
-Prototype: size_t print_list(const list_t *h);
+```
+### **Explanation of the `list_s` structure:**
 
-Return: the number of nodes
+-   **`str`**: A pointer to a dynamically allocated string (the data stored in the node).
+-   **`len`**: The length of the string (`str`).
+-   **`next`**: A pointer to the next node in the linked list, or `NULL` if this is the last node.
 
-Format: see example
+### **General Requirements**
 
-If str is NULL, print [0] (nil)
+1.  **Allowed editors**: vi, vim, emacs.
+2.  **Compilation**: Your files should compile on Ubuntu 20.04 LTS using `gcc` with the following options:
+    -   `-Wall -Werror -Wextra -pedantic -std=gnu89`.
+3.  **File endings**: All files must end with a new line.
+4.  **README.md**: A `README.md` file must be at the root of the project folder.
+5.  **Betty style**: The code should adhere to **Betty style** guidelines, which will be checked using `betty-style.pl` and `betty-doc.pl`.
+6.  **No global variables**.
+7.  **No more than 5 functions per file**.
+8.  **Standard Library Functions**: The only allowed functions from the C standard library are `malloc`, `free`, and `exit`. Functions like `printf`, `puts`, `calloc`, `realloc`, etc., are forbidden.
+9.  **_putchar**: You may use `_putchar`, but do not push your own `_putchar.c` file (we will use our provided file).
+10.  **Prototypes**: All function prototypes and the `_putchar` prototype should be declared in the header file `lists.h`.
+11.  **Include Guards**: Your header files must be include guarded.
 
-You are allowed to use printf
+### **Singly Linked List Operations**
 
-1. List length
-Write a function that returns the number of elements in a linked list_t list.
+You will implement various functions to manipulate the singly linked list. Some common operations include:
 
-Prototype: size_t list_len(const list_t *h);
+-   **Adding a new node**: A function that adds a new node to the linked list.
+-   **Printing the list**: A function to print the content of the list.
+-   **Counting the nodes**: A function that counts the number of nodes in the list.
 
-2. Add node
-Write a function that adds a new node at the beginning of a list_t list.
+Here’s an example of how a simple function to print the list might look:
+```c
+#include "lists.h"
+#include <stdio.h>
 
-Prototype: list_t *add_node(list_t **head, const char *str);
+/**
+ * print_list - prints all the elements of a list_t list.
+ * @h: pointer to the head of the list
+ * Return: the number of nodes in the list
+ */
+size_t print_list(const list_t *h)
+{
+    size_t count = 0;
 
-Return: the address of the new element, or NULL if it failed
+    while (h != NULL)
+    {
+        if (h->str == NULL)
+            printf("[0] (nil)\n");
+        else
+            printf("[%u] %s\n", h->len, h->str);
+        h = h->next;
+        count++;
+    }
 
-str needs to be duplicated
+    return count;
+}
 
-You are allowed to use strdup
+```
+### **When to Use Linked Lists vs Arrays**
 
-3. Add node at the end
-Write a function that adds a new node at the end of a list_t list.
-
-Prototype: list_t *add_node_end(list_t **head, const char *str);
-
-Return: the address of the new element, or NULL if it failed
-
-str needs to be duplicated
-
-You are allowed to use strdup
-
-4. Free list
-Write a function that frees a list_t list.
-
-Prototype: void free_list(list_t *head);
+-   **Linked Lists**: Better for scenarios where the number of elements is unknown or changes frequently. They allow efficient insertions and deletions at any point.
+-   **Arrays**: Better for fixed-size collections where elements can be accessed by index, and the number of elements is known or constant.
