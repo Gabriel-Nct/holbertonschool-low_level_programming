@@ -1,108 +1,84 @@
-Projet : Arguments en C (argc, argv)
+# C - argc, argv
 
-Ce projet contient des exercices qui vous permettent de comprendre et de manipuler les arguments passés à un programme C via la ligne de commande, en utilisant argc et argv. Chaque tâche aborde un concept clé lié à la gestion des arguments et à l'interaction avec l'utilisateur en ligne de commande.
-Objectifs d'apprentissage
+## Description
 
-À la fin de ce projet, vous devriez être capable de :
+In this project, you will learn how to use the arguments passed to your program through the command line. Specifically, you'll understand the usage of `argc` (argument count) and `argv` (argument vector) in the `main` function.
 
-    Utiliser les arguments passés à un programme.
-    Expliquer les deux prototypes de main et dans quel cas utiliser l'un ou l'autre.
-    Utiliser __attribute__((unused)) ou (void) pour compiler des fonctions avec des variables ou paramètres non utilisés.
+### Learning Objectives
 
-Prérequis
+By the end of this project, you should be able to:
 
-Avant de commencer, vous devez avoir une connaissance de base du langage C, en particulier des concepts suivants :
+-   **Understand how to use arguments passed to your program** via the command line.
+-   **Know the two prototypes of the `main` function**: one that accepts `argc` and `argv`, and the other used when arguments are not needed.
+-   **Use `__attribute__((unused))` or `(void)`** to handle unused variables or parameters in your functions, which helps avoid compilation warnings.
 
-    Les arguments de la fonction main
-    La gestion des erreurs en C
-    L’utilisation des boucles et des conditions
+## The `main` Function Prototypes
 
-Exigences
+In C, there are two common prototypes for the `main` function:
 
-    Éditeurs autorisés : vi, vim, emacs
-    Compilation : Les fichiers doivent être compilés sur Ubuntu 20.04 LTS avec gcc en utilisant les options suivantes :
+1.  **`int main(void)`**:
+    
+    -   This version of `main` is used when your program does not require any command-line arguments.
+    -   Example:
+      ```c
+    int main(void)
+    {
+    return 0;
+    }
 
-    gcc -Wall -Werror -Wextra -pedantic -std=gnu89
+      ```
+2. **int main(int argc, char *argv[])**:
 
-    Structure des fichiers : Tous les fichiers doivent se terminer par une nouvelle ligne.
-    Style de codage : Le code doit respecter le style Betty (vérifié avec betty-style.pl et betty-doc.pl).
-    Fichier README.md : Un fichier README.md est obligatoire à la racine du projet.
-    Limites :
-        Pas de variables globales.
-        Pas plus de 5 fonctions par fichier.
-        Tous les prototypes de vos fonctions, y compris _putchar, doivent être inclus dans un fichier d'en-tête nommé main.h.
+    This version allows you to pass arguments to the program via the command line.
+    argc is the number of arguments passed, including the name of the program.
+    argv is an array of strings (char arrays) representing the arguments.
+    Example:
+   ```c
+int main(int argc, char *argv[])
+{
+    for (int i = 0; i < argc; i++)
+    {
+        printf("Argument %d: %s\n", i, argv[i]);
+    }
+    return 0;
+}
 
-Tâches
-0. It ain't what they call you, it's what you answer to
+   ```
+### Key Concepts
 
-Écrire un programme qui imprime son nom, suivi d'une nouvelle ligne.
-1. Silence is argument carried out by other means
+1.  **argc**: The argument count, which holds the number of arguments passed to the program. This includes the program name itself. For example, if you run the program with `./myprogram arg1 arg2`, `argc` will be `3` (1 for `./myprogram`, 1 for `arg1`, and 1 for `arg2`).
+    
+2.  **argv**: The argument vector, which is an array of strings. Each string corresponds to an argument passed to the program. For example, `argv[0]` is the name of the program, `argv[1]` is the first argument, and so on.
+    
 
-Écrire un programme qui affiche le nombre d'arguments passés à la fonction main.
-2. The best argument against democracy is a five-minute conversation with the average voter
+----------
 
-Écrire un programme qui affiche tous les arguments reçus, un par ligne.
-3. Neither irony nor sarcasm is argument
+### Unused Variables
 
-Écrire un programme qui multiplie deux nombres. Si le programme ne reçoit pas exactement deux arguments, il doit afficher "Error" et retourner 1.
-4. To infinity and beyond
+Sometimes, you may define arguments or parameters that you do not need in your function. To avoid compilation warnings, you can use:
 
-Écrire un programme qui additionne des nombres positifs. Si aucun nombre n'est passé au programme, afficher 0. Si l'un des arguments n'est pas un chiffre, afficher "Error" et retourner 1.
-Compilation
+-   **`(void)`**: This is used to indicate that a parameter is intentionally unused.
+```c
+int main(int argc, char *argv[])
+{
+    (void)argc;
+    printf("Program name: %s\n", argv[0]);
+    return 0;
+}
 
-Pour compiler chaque fichier source, utilisez la commande suivante :
+```
+## Requirements
 
-gcc -Wall -Werror -Wextra -pedantic -std=gnu89 <fichier>.c -o <nom_exécutable>
+### General Requirements
 
-Remplacez <fichier>.c par le nom du fichier source et <nom_exécutable> par le nom que vous souhaitez donner à l'exécutable généré.
-Exemple d'exécution
+-   **Allowed editors**: `vi`, `vim`, `emacs`.
+-   **Compilation**: All your files will be compiled on Ubuntu 20.04 LTS using `gcc` with the following options:
+    -   `-Wall -Werror -Wextra -pedantic -std=gnu89`
+-   **File endings**: All your files should end with a new line.
+-   **README.md**: A `README.md` file at the root of your project folder is mandatory.
+-   **Betty style**: Your code should follow the **Betty style**. It will be checked using `betty-style.pl` and `betty-doc.pl`.
+-   **No global variables**.
+-   **No more than 5 functions per file**.
+-   **Prototypes**: All your function prototypes, including the one for `_putchar`, should be declared in a header file called `main.h`. Ensure that `main.h` is pushed to your repository.
+-   **Standard library**: You are allowed to use the standard library.
 
-    Tâche 0 :
-
-$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 0-whatsmyname.c -o mynameis
-$ ./mynameis
-./mynameis
-
-    Tâche 1 :
-
-$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 1-args.c -o nargs
-$ ./nargs hello world
-2
-
-    Tâche 2 :
-
-$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 2-args.c -o args
-$ ./args You can do anything, but not everything.
-You
-can
-do
-anything,
-but
-not
-everything.
-
-    Tâche 3 :
-
-$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 3-mul.c -o mul
-$ ./mul 2 3
-6
-$ ./mul 2 -3
--6
-$ ./mul
-Error
-
-    Tâche 4 :
-
-$ gcc -Wall -pedantic -Werror -Wextra -std=gnu89 4-add.c -o add
-$ ./add 1 1
-2
-$ ./add 1 10 100 1000
-1111
-$ ./add 1 2 3 e 4 5
-Error
-$ ./add
-0
-
-Conclusion
-
-Ce projet vous permettra de mieux comprendre le fonctionnement des arguments en C et d'approfondir votre maîtrise de la manipulation des chaînes et des nombres passés en ligne de commande.
