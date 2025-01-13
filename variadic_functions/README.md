@@ -1,113 +1,107 @@
-Variadic Functions
+# C - Variadic Functions
 
-Description
+## Description
 
-This project implements variadic functions in C. Variadic functions allow you to define functions that accept a variable number of arguments. The main goal of this project is to become familiar with using the macros va_start, va_arg, and va_end to handle these variable arguments, as well as understanding how to use the const keyword in C.
+A **variadic function** is a function that can accept a variable number of arguments. This is achieved by using macros provided in the `stdarg.h` header file, such as `va_start`, `va_arg`, and `va_end`.
 
-Learning Objectives
+### Learning Objectives
 
-By the end of this project, you should be able to explain:
+By the end of this project, you should be able to:
 
-    What variadic functions are.
-    How to use the va_start, va_arg, and va_end macros.
-    Why and how to use the const type qualifier.
+-   **Understand what variadic functions are**.
+-   **Know how to use the `va_start`, `va_arg`, and `va_end` macros**.
+-   **Understand why and how to use the `const` type qualifier**.
 
-Tasks
+## Key Concepts
 
-0. Beauty is variable, ugliness is constant
+### What Are Variadic Functions?
 
-Write a function that returns the sum of all its parameters.
+A **variadic function** is a function that takes an indefinite number of arguments. It is declared using an ellipsis (`...`) in the function prototype to indicate that it can accept a variable number of arguments.
+
+Example of a variadic function declaration:
 ```c
-    Prototype: int sum_them_all(const unsigned int n, ...);
-    If n == 0, return 0.
+int sum(int n, ...);
+```
+In the above example, `n` is a regular parameter, and the `...` indicates that the function can accept a variable number of arguments.
+
+### Macros to Access Variadic Arguments
+
+The C language provides the following macros for working with variadic functions:
+
+1.  **`va_start`**: Initializes a `va_list` variable to access the variable arguments.
+2.  **`va_arg`**: Retrieves the next argument in the argument list and advances the pointer.
+3.  **`va_end`**: Cleans up any resources used by the variadic argument list.
+
+### Example of Using `va_start`, `va_arg`, and `va_end`
+
+Here’s an example of how you can implement a variadic function that sums up all the arguments:
+```c
+#include <stdarg.h>
+#include <stdio.h>
+
+/**
+ * sum - returns the sum of all its parameters.
+ * @n: the number of arguments
+ * Return: sum of all arguments
+ */
+int sum(int n, ...)
+{
+    int total = 0;
+    va_list args;
+
+    va_start(args, n);
+
+    for (int i = 0; i < n; i++)
+{
+        total += va_arg(args, int);
+}
+
+    va_end(args);
+
+    return total;
+}
+
+int main(void) {
+    printf("Sum: %d\n", sum(3, 1, 2, 3))
+Sum: 6
+    return 0;
+}
+
 ```
 
-1. To be is to be the value of a variable
+In this example:
 
-Write a function that prints numbers, followed by a new line.
+-   `va_start(args, n)` initializes `args` to point to the first variadic argument.
+-   `va_arg(args, int)` retrieves the next argument as an integer.
+-   `va_end(args)` is used to clean up the memory used by `args`.
+
+### Why and How to Use the `const` Type Qualifier
+
+The `const` type qualifier can be used to declare parameters or variables that should not be modified. It's helpful for ensuring that certain arguments passed to functions remain unchanged within the function body. For example:
 ```c
-    Prototype: void print_numbers(const char *separator, const unsigned int n, ...);
+void print_message(const char *msg)
+{
+    printf("%s\n", msg);
+}
+
 ```
-    separator is the string to be printed between numbers.
-    n is the number of integers passed to the function.
-    If separator is NULL, do not print it.
+Here, `msg` is a pointer to a constant string, meaning you cannot modify the string that `msg` points to within the function.
 
+----------
 
-2. One woman's constant is another woman's variable
+## Requirements
 
-Write a function that prints strings, followed by a new line.
-```c
-    Prototype: void print_strings(const char *separator, const unsigned int n, ...);
-```
-    separator is the string to be printed between strings.
-    n is the number of strings passed to the function.
-    If separator is NULL, don’t print it.
-    If one of the strings is NULL, print (nil) instead.
+### General Requirements
 
-
-3. To be is a to be the value of a variable
-
-Write a function that prints anything.
-```c
-    Prototype: void print_all(const char * const format, ...);
-```
-    format is a list of types of arguments passed to the function. It can be:
-        c: char
-        i: integer
-        f: float
-        s: char * (If the string is NULL, print (nil) instead).
-        Any other character should be ignored.
-    You are not allowed to use for, goto, ternary operators, else, or do...while.
-    You can use a maximum of:
-        2 while loops
-        2 if conditions
-    You can declare a maximum of 9 variables.
-    You are allowed to use printf.
-
-Files
-
-    variadic_functions.h: Header file that contains the function prototypes.
-    0-sum_them_all.c: Function that returns the sum of all its parameters.
-    1-print_numbers.c: Function that prints numbers, followed by a new line.
-    2-print_strings.c: Function that prints strings, followed by a new line.
-    3-print_all.c: Function that prints any type of argument passed to it.
-
-Compilation
-
-The project must be compiled using the following GCC options:
-```c
-gcc -Wall -Werror -Wextra -pedantic -std=gnu89 <file.c> -o <output_name>
-```
-Ensure that you do not use global variables and that your code adheres to the Betty style guide.
-Requirements
-
-    Allowed editors: vi, vim, emacs.
-    All files should be compiled on Ubuntu 20.04 LTS using gcc.
-    All files should end with a new line.
-    The function prototypes should be included in a header file called variadic_functions.h.
-    You are allowed to use the following macros: va_start, va_arg, va_end.
-    You are allowed to use the _putchar function for output.
-    No other standard C library functions (like printf, puts, calloc, etc.) are allowed.
-
-Example
-Example 1:
-```c
-sum_them_all(2, 98, 1024); // Output: 1122
-sum_them_all(4, 98, 1024, 402, -1024); // Output: 500
-```
-Example 2:
-```c
-print_numbers(", ", 4, 0, 98, -1024, 402); // Output: 0, 98, -1024, 402
-```
-Example 3:
-```c
-print_strings(", ", 2, "Jay", "Django"); // Output: Jay, Django
-```
-Example 4:
-```c
-print_all("ceis", 'B', 3, "stSchool"); // Output: B, 3, stSchool
-```
-Submission
-
-    Push your code to your repository.
-    Ensure that all your files (including the header file) are correctly placed in the corresponding directory (variadic_functions).
+-   **Allowed editors**: `vi`, `vim`, `emacs`.
+-   **Compilation**: Your files will be compiled on Ubuntu 20.04 LTS using `gcc` with the following options:
+    -   `-Wall -Werror -Wextra -pedantic -std=gnu89`.
+-   **File endings**: All your files should end with a new line.
+-   **README.md**: A `README.md` file is mandatory in the root of your project folder.
+-   **Betty style**: Your code should follow the **Betty style**. It will be checked using `betty-style.pl` and `betty-doc.pl`.
+-   **No global variables**.
+-   **No more than 5 functions per file**.
+-   **Allowed standard library functions**: `malloc`, `free`, and `exit`. You cannot use other standard library functions like `printf`, `puts`, `calloc`, `realloc`, etc.
+-   **_putchar**: You are allowed to use `_putchar`, but you don’t have to push your `_putchar.c` file.
+-   **Function prototypes**: All function prototypes should be in a header file called `variadic_functions.h`.
+-   **Header files**: All header files should be **include guarded**.
