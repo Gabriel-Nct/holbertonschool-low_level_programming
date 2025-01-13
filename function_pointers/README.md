@@ -1,61 +1,88 @@
-Pointeurs de Fonction en C
-Description
-Ce projet couvre l'utilisation des pointeurs de fonctions en langage C. Il inclut des exemples pratiques, des explications théoriques et des quizz pour évaluer vos connaissances.
+# C - Function Pointers
 
-Objectifs d'Apprentissage
-À la fin de ce projet, vous devriez être capable d'expliquer à quiconque, sans l'aide de Google :
+## Description
 
-Ce que sont les pointeurs de fonctions et comment les utiliser
+Function pointers are a powerful tool in C, allowing you to reference functions and call them indirectly through a pointer. This project will help you understand:
 
-Ce que contient exactement un pointeur de fonction
+-   **What function pointers are and how to use them**.
+-   **What a function pointer holds**.
+-   **Where a function pointer points in virtual memory**.
 
-Où pointe un pointeur de fonction dans la mémoire virtuelle
+### Learning Objectives
 
-Ressources
-Function Pointer in C
+By the end of this project, you should be able to:
 
-Pointers to functions
+-   **Understand what function pointers are** and how they work.
+-   **Know what a function pointer exactly holds** (the memory address of a function).
+-   **Understand where the function pointer points to in the virtual memory**.
 
-Function Pointers in C / C++
+----------
 
-Why pointers to functions?
+## Key Concepts
 
-Everything you need to know about pointers in C
+### What is a Function Pointer?
 
-Exigences Générales
-Éditeurs autorisés : vi, vim, emacs
+A **function pointer** is a pointer that points to a function instead of a variable. It stores the memory address of a function, which you can later use to call the function indirectly. This can be useful when you want to call a function dynamically or pass a function as an argument to another function.
 
-Tous vos fichiers seront compilés sur Ubuntu 20.04 LTS en utilisant gcc, avec les options -Wall -Werror -Wextra -pedantic -std=gnu89
+### Syntax of Function Pointers
 
-Tous vos fichiers doivent se terminer par une nouvelle ligne
+A function pointer is declared with the following syntax:
+```c
+return_type (*pointer_name)(parameter_types);
+```
+For example, to declare a function pointer that points to a function that takes two int arguments and returns an int:
+```c
+int (*func_ptr)(int, int);
+```
 
-Un fichier README.mdà la racine du dossier du projet est obligatoire
+### Using Function Pointers
 
-Votre code doit utiliser le style Betty. Il sera vérifié en utilisant betty-style.plet betty-doc.pl
+Once a function pointer is declared, you can assign it to a function and use it to call the function:
+```c
+#include <stdio.h>
 
-Vous n'êtes pas autorisé à utiliser des variables globales
+int add(int a, int b)
+{
+    return a + b;
+}
 
-Pas plus de 5 fonctions par fichier
+int main(void)
+{
+    int (*func_ptr)(int, int); 
+    func_ptr = &add;
 
-Les seules fonctions de la bibliothèque standard C autorisées sont malloc, free et exit. Toute utilisation de fonctions telles que printf, puts, calloc, realloc, etc., est interdite
+    /* Call the function via the function pointer */
+    printf("%d\n", func_ptr(2, 3));
 
-Vous êtes autorisé à utiliser _putchar
+    return 0;
+}
 
-Vous n'avez pas besoin de pousser _putchar.c, nous utiliserons notre fichier. Si vous le faites, il ne sera pas pris en compte
+```
 
-Dans les exemples suivants, les fichiers main.c sont montrés à titre d'exemple. Vous pouvez les utiliser pour tester vos fonctions, mais vous n'avez pas besoin de les pousser dans votre dépôt (si vous le faites, nous ne les prendrons pas en compte). Nous utiliserons nos propres fichiers main.c lors de la compilation. Nos fichiers main.c peuvent être différents de ceux montrés dans les exemples
+### Where Does a Function Pointer Point to in Memory?
 
-Les prototypes de toutes vos fonctions et le prototype de la fonction _putchar doivent être inclus dans votre fichier d'en-tête appelé function_pointers.h
+A function pointer points to the **address of the function** in the memory space where the function code is stored. You can visualize a function pointer as holding the "entry point" to the function's code.
 
-N'oubliez pas de pousser votre fichier d'en-tête
+### Use Cases of Function Pointers
 
-Tous vos fichiers d'en-tête doivent être protégés contre les inclusions multiples
+1.  **Callback functions**: Functions that are passed as arguments to other functions to be called later.
+2.  **Dynamic dispatch**: Function pointers allow you to select which function to call at runtime, based on conditions.
+3.  **Table of functions**: Arrays of function pointers are often used to implement a menu system or command dispatch.
 
-Tâches
-Quel est mon nom
+## Requirements
 
-Si vous passez trop de temps à penser à une chose, vous ne l'accomplirez jamais
+### General Requirements
 
-Peu importe les circonstances; je crée des opportunités
+-   **Allowed editors**: `vi`, `vim`, `emacs`.
+-   **Compilation**: Your files will be compiled on Ubuntu 20.04 LTS using `gcc` with the following options:
+    -   `-Wall -Werror -Wextra -pedantic -std=gnu89`.
+-   **File endings**: All your files should end with a new line.
+-   **README.md**: A `README.md` file is mandatory in the root of your project folder.
+-   **Betty style**: Your code should follow the **Betty style**. It will be checked using `betty-style.pl` and `betty-doc.pl`.
+-   **No global variables**.
+-   **No more than 5 functions per file**.
+-   **Allowed standard library functions**: `malloc`, `free`, and `exit`. Use of functions like `printf`, `puts`, `calloc`, `realloc`, etc., is forbidden.
+-   **_putchar**: You are allowed to use `_putchar`, but you don’t have to push your `_putchar.c` file.
+-   **Function prototypes**: All function prototypes and the prototype for `_putchar` should be in a header file called `function_pointers.h`.
+-   **Header files**: All header files should be **include guarded**.
 
-Un objectif n'est pas toujours destiné à être atteint, il sert souvent simplement de quelque chose à viser
