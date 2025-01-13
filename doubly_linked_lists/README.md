@@ -1,40 +1,76 @@
-Doubly Linked List
-Overview
-A Doubly Linked List is a type of data structure that consists of a sequence of elements, where each element (known as a node) points to both its predecessor and its successor. This bidirectional linking allows for more flexible navigation compared to a singly linked list.
+### * C - Doubly linked lists**
 
-Structure
-Each node in a Doubly Linked List contains three fields:
+A **doubly linked list** is similar to a singly linked list but with an additional pointer in each node that points to the previous node. This allows traversal of the list in both directions: forward and backward.
 
-Data: Stores the value or information of the node.
+### **Learning Objectives**
 
-Next: A reference to the next node in the sequence.
+By the end of this project, you should be able to:
 
-Previous: A reference to the previous node in the sequence.
+-   **Understand what a doubly linked list is**: A doubly linked list is a data structure where each node contains:
+    
+    -   Data (in this case, an integer).
+    -   A pointer to the next node.
+    -   A pointer to the previous node.
+-   **Know how to use doubly linked lists**: Implementing functions to add, remove, and traverse doubly linked list nodes, both forwards and backwards.
+    
+-   **Start to find relevant resources independently**: Learn how to search for information and troubleshoot problems without relying too heavily on external help.
 
-plaintext
-NULL <- [Prev | Data | Next] <-> [Prev | Data | Next] <-> [Prev | Data | Next] -> NULL
-Advantages
-Bidirectional Traversal: Allows traversal in both forward and backward directions.
+### **Data Structure**
 
-Easier Deletion: Deleting a node can be easier since there's direct access to both the next and previous nodes.
+For this project, you will use the following structure for the nodes of the doubly linked list:
+```c
+/**
+ * struct dlistint_s - doubly linked list
+ * @n: integer
+ * @prev: points to the previous node
+ * @next: points to the next node
+ *
+ * Description: doubly linked list node structure
+ */
+typedef struct dlistint_s
+{
+    int n;
+    struct dlistint_s *prev;
+    struct dlistint_s *next;
+} dlistint_t;
 
-Flexibility: Can be more flexible for certain operations like splitting the list, inserting at the end, etc.
+```
 
-Disadvantages
-Extra Memory Usage: Requires more memory to store the Previous and Next pointers.
+### **Explanation of the `dlistint_s` structure:**
 
-Complexity: The implementation is more complex due to the additional pointer management.
+-   **`n`**: An integer data field that holds the value for each node.
+-   **`prev`**: A pointer to the previous node in the list. This is `NULL` for the first node.
+-   **`next`**: A pointer to the next node in the list. This is `NULL` for the last node.
 
-Operations
-Insertion
-Inserting a new node in a Doubly Linked List involves adjusting the Next and Previous pointers of the neighboring nodes and the new node.
+----------
 
-Deletion
-Deleting a node requires re-linking the Previous pointer of the next node and the Next pointer of the previous node to each other, effectively removing the node from the chain.
+### **General Requirements**
 
-Traversal
-Traversing can be done in both forward and backward directions. Starting from the head (or tail), you can follow the Next (or Previous) pointers until you reach the end of the list.
+1.  **Allowed editors**: vi, vim, emacs.
+2.  **Compilation**: Your files will be compiled using Python 3.8.5 on Ubuntu 20.04 LTS. Use the following command to compile:
+    -   `gcc -Wall -Werror -Wextra -pedantic -std=gnu89 -o list_program *.c`
+3.  **File endings**: All files must end with a new line.
+4.  **README.md**: A `README.md` file should be at the root of your project folder.
+5.  **Betty style**: Your code should adhere to **Betty style**. This will be checked using `betty-style.pl` and `betty-doc.pl`.
+6.  **No global variables**.
+7.  **No more than 5 functions per file**.
+8.  **Allowed functions**: You are only allowed to use `malloc`, `free`, `printf`, and `exit` from the standard C library. Functions like `puts`, `strdup`, `calloc`, `realloc`, and others are forbidden.
+9.  **Prototypes**: All function prototypes should be included in the header file `lists.h`.
+10.  **Include Guards**: Your header file should be protected by include guards.
 
-Conclusion
+### **Doubly Linked List Traversal**
 
-Doubly Linked Lists offer a flexible and efficient way to manage collections of data that require frequent insertions and deletions. While they use more memory and have a more complex implementation, their advantages in certain scenarios make them a valuable tool in a programmer's toolkit.
+The major advantage of a doubly linked list is the ability to traverse it in both directions:
+
+-   **Forward traversal** using the `next` pointer.
+-   **Backward traversal** using the `prev` pointer.
+
+You can use this structure to iterate over the list from the last node to the first node, which can be beneficial in some situations.
+
+----------
+
+### **Use Cases for Doubly Linked Lists**
+
+-   **Bidirectional traversal**: You can traverse in both directions, which is helpful when you need to move back and forth.
+-   **Efficient deletion from both ends**: You can add or remove elements from both ends of the list efficiently (no need to traverse to the end as in a singly linked list).
+-   **Memory overhead**: Doubly linked lists require more memory than singly linked lists because each node has an extra pointer (`prev`), but they provide greater flexibility.
